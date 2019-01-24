@@ -1,0 +1,31 @@
+<h6>
+  Enterprise Search
+</h6>
+<nav>
+  <div class="nav"
+       id="nav-tab"
+       role="tablist">
+    <a class="nav-item nav-link cursor-pointer active"
+       id="nav-ifs-tab"
+       data-toggle="tab"
+       (click)="loadTab('ifsTab')"
+       role="tab" [ngClass]="{'current-tab': currentTemplate}"
+       aria-controls="nav-ifs"
+       aria-selected="true">IFS Data</a>
+    <a class="nav-item nav-link cursor-pointer"
+       id="nav-operational-tab"
+       data-toggle="tab"
+       [ngClass]="{'current-tab': !currentTemplate}"
+       (click)="loadTab('ODTab')"
+       role="tab"
+       aria-controls="nav-operational"
+       aria-selected="false">Operational Data</a>
+  </div>
+</nav>
+
+<div *ngIf="currentTemplate">
+  <ifs-data></ifs-data>
+</div>
+<div *ngIf="!currentTemplate">
+  <operational-data></operational-data>
+</div>

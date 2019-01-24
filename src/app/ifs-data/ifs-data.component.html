@@ -1,0 +1,373 @@
+<div class="">
+  <div class="col">
+    <div class="d-flex align-items-center">
+
+      <div class="form-group">
+        <label for="ifsStartDate">Reported Date</label>
+        <input class="form-control form-control-sm"
+               type="date"
+               name="ifsStartDate"
+               id="ifsStartDate"
+               onkeydown="return false"
+               [(ngModel)]="ifsStartDate"
+               (change)="searchOnChange(ifsStartDate)">
+      </div>
+
+      <div class="form-group margin-l-20">
+        <label for="ifsSearchCategory">Category</label>
+        <input class="form-control form-control-sm"
+               type="text"
+               name="ifsSearchCategory"
+               id="ifsSearchCategory"
+               (keyup)="loadDefault(ifsSearchCategory)"
+               [(ngModel)]="ifsSearchCategory">
+      </div>
+
+      <div class="form-group margin-l-20 search-btn">
+        <button type="button"
+                (click)="filterRecords(ifsSearchCategory)"
+                class="btn btn-danger capsule-btn">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+<form name="form"
+      #f="ngForm">
+  <table class="table table-sm">
+    <tr>
+      <td>
+        <div class="form-group">
+          <label for="caseNo">Case</label><span class="mandatory-field"> *</span>
+          <input class="form-control form-control-sm"
+                 type="number"
+                 placeholder="case"
+                 name="caseNo"
+                 id="caseNo"
+                 required
+                 OnlyNumbers="true"
+                 #case="ngModel"
+                 [ngClass]="{'is-invalid': f.submitted && case.invalid}"
+                 [(ngModel)]="formData.caseNo">
+          <div class="invalid-feedback">
+            Case is required
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="caseNumber">Case Number</label><span class="mandatory-field"> *</span>
+          <input class="form-control form-control-sm"
+                 type="number"
+                 placeholder="Case Number"
+                 name="caseNumber"
+                 id="caseNumber"
+                 required
+                 OnlyNumbers="true"
+                 #caseNumber="ngModel"
+                 [ngClass]="{'is-invalid': f.submitted && caseNumber.invalid}"
+                 [(ngModel)]="formData.caseNumber">
+          <div class="invalid-feedback">
+            Case Number is required
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="source">Source</label><span class="mandatory-field"> *</span>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 name="source"
+                 placeholder="Phone / WhatsApp"
+                 id="source"
+                 required
+                 #source="ngModel"
+                 [ngClass]="{'is-invalid': f.submitted && source.invalid}"
+                 [(ngModel)]="formData.source">
+          <div class="invalid-feedback">
+            Source is required
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="feedbackType">Feedback Type</label><span class="mandatory-field"> *</span>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="Compliment"
+                 name="feedbackType"
+                 id="feedbackType"
+                 required
+                 #feedbackType="ngModel"
+                 [ngClass]="{'is-invalid': f.submitted && feedbackType.invalid}"
+                 [(ngModel)]="formData.feedbackType">
+          <div class="invalid-feedback">
+            Feedback Type is required
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="division">Division</label><span class="mandatory-field"> *</span>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="LRT-BP"
+                 name="division"
+                 id="division"
+                 required
+                 #division="ngModel"
+                 [ngClass]="{'is-invalid': f.submitted && division.invalid}"
+                 [(ngModel)]="formData.division">
+          <div class="invalid-feedback">
+            Division is required
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="incidentDate">Incident Date</label><span class="mandatory-field"> *</span>
+          <input class="form-control form-control-sm"
+                 type="date"
+                 name="incidentDate"
+                 id="incidentDate"
+                 required
+                 onkeydown="return false"
+                 #incidentDate="ngModel"
+                 [ngClass]="{'is-invalid': f.submitted && incidentDate.invalid}"
+                 [(ngModel)]="formData.incidentDate">
+          <div class="invalid-feedback">
+            Incident Date is required
+          </div>
+        </div>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td>
+        <div class="form-group">
+          <label for="createdOn">Created On</label><span class="mandatory-field"> *</span>
+          <input class="form-control form-control-sm"
+                 type="date"
+                 name="createdOn"
+                 id="createdOn"
+                 required
+                 (change)="checkDate(this, $event, formData.createdOn, formData.reportedDate)"
+                 onkeydown="return false"
+                 #createdOn="ngModel"
+                 [ngClass]="{'is-invalid': f.submitted && createdOn.invalid}"
+                 [(ngModel)]="formData.createdOn">
+          <div class="invalid-feedback"
+               *ngIf="f.submitted && createdOn.invalid">
+            <div *ngIf="createdOn.errors.required">
+              Created On is required
+            </div>
+          </div>
+          <div *ngIf="reportedErrorMsg"
+               style="width: 100%; margin-top: .25rem; font-size: 80%; color: #dc3545;">
+            Created date should be lesser than reported date.
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="reportedDate">Reported Date</label><span class="mandatory-field"> *</span>
+          <input class="form-control form-control-sm"
+                 type="date"
+                 name="reportedDate"
+                 id="reportedDate"
+                 (change)="checkDate(this, $event, formData.createdOn, formData.reportedDate)"
+                 required
+                 onkeydown="return false"
+                 #reportedDate="ngModel"
+                 [ngClass]="{'is-invalid': f.submitted && reportedDate.invalid}"
+                 [(ngModel)]="formData.reportedDate">
+          <div class="invalid-feedback">
+            Reported Date is required
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="incidentTime">Incident Time</label>
+          <input class="form-control form-control-sm"
+                 type="time"
+                 id="incidentTime"
+                 name="incidentTime"
+                 [(ngModel)]="incidentTime">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="Location"
+                 name="location"
+                 id="location"
+                 [(ngModel)]="location">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="stationFrom">Station From</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="From"
+                 name="stationFrom"
+                 id="stationFrom"
+                 [(ngModel)]="stationFrom">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="stationTo">Station To</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="Station To"
+                 name="stationTo"
+                 id="stationTo"
+                 [(ngModel)]="stationTo">
+        </div>
+      </td>
+    </tr>
+
+
+
+    <tr>
+      <td>
+        <div class="form-group">
+          <label for="alignPoint">Bus Align Point</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="Align Point"
+                 name="alignPoint"
+                 id="alignPoint"
+                 [(ngModel)]="alignPoint">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="boardingPoint">Bus Boarding Point</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="Boarding Point"
+                 name="boardingPoint"
+                 id="boardingPoint"
+                 [(ngModel)]="boardingPoint">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="incidentAt">Bus Incident At</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 id="incidentAt"
+                 placeholder="Incident At"
+                 name="incidentAt"
+                 [(ngModel)]="incidentAt">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="registrationNo">Bus Registration Number</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="Regsitration Number"
+                 name="registrationNo"
+                 id="registrationNo"
+                 [(ngModel)]="registrationNo">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="serviveNumber">Bus Service Number</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="Service Number"
+                 name="serviveNumber"
+                 id="serviveNumber"
+                 [(ngModel)]="serviveNumber">
+        </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input class="form-control form-control-sm"
+                 type="text"
+                 placeholder="Subject"
+                 name="subject"
+                 id="subject"
+                 [(ngModel)]="subject">
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <label for="description">Description</label>
+        <textarea name="description"
+                  id="description"
+                  class="form-control form-control-sm">Your Message Here...</textarea>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="d-flex justify-content-end">
+        <div class="align-items-end justify-content-end">
+          <button type="submit"
+                  (click)="checkthis(formData, f)"
+                  class="btn btn-danger capsule-btn add-btn">Add</button>
+        </div>
+      </td>
+    </tr>
+
+
+  </table>
+</form>
+<div class="d-flex justify-content-end">
+  <button class="btn btn-sm"
+          [ngClass]="paginationCounter == 0 ? 'disable-element' : ''"
+          (click)="previous()">&lt; Previous </button>
+  <button class="btn btn-sm"
+          [ngClass]="maxLength ? 'disable-element' : ''"
+          (click)="next()">Next &gt;</button>
+</div>
+<table class="table table-sm">
+  <tr>
+    <th>Edit/Save</th>
+    <th>Case Number</th>
+    <th>Feedback Type</th>
+    <th>Source</th>
+    <th>Division</th>
+    <th>Reported Date</th>
+    <th>Created On</th>
+    <th>Engine Score</th>
+    <!-- <th>Manual Input</th> -->
+    <th>Last Saved User</th>
+  </tr>
+  <tr *ngFor="let item of ifsRecords | slice:0:3">
+    <!-- <ifs-record [record] = "item"></ifs-record> -->
+    <td style="white-space:nowrap;">
+      <i class="fa fa-pencil fa-fw cursor-pointer"
+         (click)="enableEditing($event, item)"
+         aria-hidden="true"></i>
+      <i class="fa fa-save fa-fw cursor-pointer disable-element"
+         id="{{item.caseNumber + 'saveBtn'}}"
+         (click)="saveRecord($event, item)"
+         aria-hidden="true"></i>
+    </td>
+    <td>{{ item.caseNumber }}</td>
+    <td id="{{item.caseNumber + 'feedbacktype'}}">{{ item.feedbackType }}</td>
+    <td id="{{item.caseNumber + 'source'}}">{{ item.source }}</td>
+    <td id="{{item.caseNumber + 'division'}}">{{ item.division }}</td>
+    <td id="{{item.caseNumber + 'reported'}}">{{ item.reportedDate }}</td>
+    <td id="{{item.caseNumber + 'created'}}">{{ item.createdOn }}</td>
+    <td id="{{item.caseNumber + 'score'}}">{{ item.engineScore }}</td>
+    <!-- <td><select class="input-control input-control-sm"
+              style="padding: 0px;">
+        <option value="ES">ES</option>
+        <option value="AS">AS</option>
+      </select></td> -->
+    <td id="{{item.caseNumber + 'saved'}}">{{ item.lastSaved }}</td>
+  </tr>
+</table>

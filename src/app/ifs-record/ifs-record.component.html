@@ -1,0 +1,21 @@
+<td style="white-space:nowrap;">
+    <i class="fa fa-pencil fa-fw cursor-pointer"
+       (click)="isEditable = true"
+       aria-hidden="true"></i>
+    <i class="fa fa-save fa-fw disable-click cursor-pointer"
+       (click)="checkthis($event, item, this)"
+       aria-hidden="true"></i>
+</td>
+<td>{{ record.caseNumber }}</td>
+<td [attr.contenteditable]="isEditable ? true : false">{{ record.feedbackType }}</td>
+<td contenteditable>{{ record.source }}</td>
+<td>{{ record.division }}</td>
+<td>{{ record.reportedDate }}</td>
+<td>{{ record.createdOn }}</td>
+<td>{{ record.engineScore }}</td>
+<td><select class="input-control input-control-sm"
+            style="padding: 0px;">
+        <option value="ES">ES</option>
+        <option value="AS">AS</option>
+    </select></td>
+<td>{{ record.lastSaved }}</td>

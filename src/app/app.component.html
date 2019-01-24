@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="col">
+    <div>
+
+      <!--    Navigation starts here    -->
+
+      <nav class="navbar navbar-light bg-light sticky-top">
+        <a class="navbar-brand">
+          <img src="../assets/images/logo.png"
+               alt=""
+               srcset="">
+        </a>
+
+        <ul class="nav justify-content-end" *ngIf="loggedInStatus">
+            <li class="nav-item">
+              <a class="nav-link active">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">View</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">Help</a>
+            </li>
+            <li class="nav-item">
+              <select name="" id="" class="form-control form-control-sm">
+                <option value="BusinessUnit" selected>Business Unit</option>
+                <option value="someOther">Some Other</option>
+                <option value="someOther2">Some Other 2</option>
+              </select>
+            </li>
+            <li class="nav-item">
+              <button type="button" (click)="logout()" class="btn btn-sm btn-danger capsule-btn margin-l-20">Logout &gt;</button>
+            </li>
+          </ul>
+      </nav>
+      <!--    navigation ends here    -->
+
+      <!--    login component here    -->
+
+      <!--    Login component ends here   -->
+      <router-outlet></router-outlet>
+      <!-- <login-form></login-form> -->
+      <!-- footer starts here    -->
+      <div class="d-flex justify-content-center custom-footer">
+        <footer>&copy; SMRT | 2019</footer>
+      </div>
+    </div>
+    <!--    footer ends here    -->
+  </div>
+</div>

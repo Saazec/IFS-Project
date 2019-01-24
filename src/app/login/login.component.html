@@ -1,0 +1,95 @@
+<div class="container h-100 bg-grey"
+     style="margin-top:10%;">
+    <div class="row h-100 justify-content-center align-items-center">
+        <form class="col-md-4"
+              name="form"
+              #f="ngForm"
+              novalidate>
+            <h6 class="text-center"
+                style="padding-bottom: 50px;">Login</h6>
+            <div class="form-group">
+                <label for="username">USER NAME</label>
+                <input type="text"
+                       [(ngModel)]="loginModel.userName"
+                       class="form-control"
+                       id="userName"
+                       name="userName"
+                       placeholder="Enter Your User Name"
+                       required
+                       #userName="ngModel"
+                       (keyup)="userErrorMsg = false"
+                       [ngClass]="{'is-invalid': f.submitted && userName.invalid}">
+                <!-- <span class="error-message"
+                      *ngIf="userErrorMsg">Enter your user name.</span> -->
+                <div class="invalid-feedback">
+                    Enter Username
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">PASSWORD</label>
+                <input type="password"
+                       [(ngModel)]="loginModel.password"
+                       name="password"
+                       class="form-control"
+                       name="password"
+                       id="password"
+                       required
+                       placeholder="*********"
+                       #password="ngModel"
+                       [ngClass]="{'is-invalid': f.submitted && password.invalid}"
+                       (keyup)="passwordErrorMsg = false">
+                <!-- <span class="error-message"
+                      *ngIf="passwordErrorMsg">Enter your password.</span> -->
+                <div class="invalid-feedback">
+                    Enter Password
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="role">LOGIN AS</label>
+                <select name="role"
+                        [(ngModel)]="loginModel.selectedRole"
+                        id="role"
+                        class="form-control"
+                        required
+                        #selectedRole="ngModel"
+                        [ngClass]="{'is-invalid': f.submitted && selectedRole.invalid}"
+                        (change)="roleErrorMsg = false">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="guest">Guest</option>
+                </select>
+                <!-- <span class="error-message"
+                      *ngIf="roleErrorMsg">Select your role.</span> -->
+
+                <div class="invalid-feedback">
+                    Select Role
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col margin-t-5">
+                    <input type="checkbox"
+                           name="remember"
+                           id="remember"> REMEMBER ME
+                </div>
+                <div class="margin-5-15">
+                    <span><a [routerLink]="['/forgot-password']">Forgot Password</a></span>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <span class="error-message"
+                      *ngIf="invalidMsg">Invalid Username or password</span>
+            </div>
+            <div class="row d-flex justify-content-end margin-0">
+                <button type="submit"
+                        (click)="authorize($event, loginModel.userName, loginModel.password, loginModel.selectedRole)"
+                        class="btn btn-danger capsule-btn">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- <router-outlet></router-outlet> -->

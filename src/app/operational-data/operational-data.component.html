@@ -1,0 +1,63 @@
+<div>
+  <div class="col">
+    <div class="d-flex align-items-center">
+
+      <div class="form-group">
+        <label for="ODStartDate">Start Date</label>
+        <input class="form-control form-control-sm"
+               type="date"
+               name="ODStartDate"
+               id="ODStartDate"
+               (change)="searchOnChange(ODStartDate)"
+               onkeydown="return false"
+               [(ngModel)]="ODStartDate">
+      </div>
+
+      <div class="form-group margin-l-20">
+        <label for="ODSearch">Category</label>
+        <input class="form-control form-control-sm"
+               type="text"
+               name="ODSearch"
+               id="ODSearch"
+               (keyup)="checkIfEmpty(ODSearch)"
+               [(ngModel)]="ODSearch">
+      </div>
+
+      <div class="form-group margin-l-20 search-btn">
+        <button type="button"
+                (click)="filterRecords(ODSearch)"
+                class="btn btn-danger capsule-btn">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end">
+  <button class="btn btn-sm"
+          [ngClass]="{'disable-element': pointer == 0}"
+          (click)="previous()"
+          type="button">&lt; Previous</button>
+  <button class="btn btn-sm"
+  (click)="next()" [ngClass]="{'disable-element': disableNext}"
+          type="button">Next &gt;</button>
+</div>
+<div>
+  <table class="table table-sm">
+    <tr>
+      <th>Sr. No</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Category</th>
+      <th>Message</th>
+      <th>Impact</th>
+    </tr>
+
+    <tr *ngFor="let item of odData | slice: 0: 3">
+      <td>{{ item.serial }}</td>
+      <td>{{ item.date }}</td>
+      <td>{{ item.time }}</td>
+      <td>{{ item.category }}</td>
+      <td>{{ item.message }}</td>
+      <td>{{ item.impact }}</td>
+    </tr>
+  </table>
+</div>

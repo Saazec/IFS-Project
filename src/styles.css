@@ -1,0 +1,128 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.min.css";
+
+html,body{
+  height: 100%,
+}
+
+div.card-header {
+ font-size: large;
+}
+
+div.card {
+  margin-top: 10px
+}
+
+.table {
+  margin-top: 10px
+}
+.custom-footer {
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+}
+
+.capsule-btn {
+  background-color: coral;
+  border: none;
+  color: white;
+  border-radius: 20px;
+}
+.error-message {
+  font-size: 12px;
+  color: red;
+}
+
+.success-message {
+  font-size: 12px;
+  color: green;
+}
+.mandatory-field {
+  color: red;
+  font-weight: bold;
+}
+label {
+  font-size: 14px;
+}
+.form-group {
+  margin-bottom: 0;
+}
+.table {
+  border-color: transparent; 
+  font-size: 14px;
+}
+
+.disable-element {
+  pointer-events: none;
+  color: grey;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+input[type="date"] {
+  position: relative;
+  padding: 10px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: transparent;
+  background: none;
+  z-index: 1;
+}
+
+input[type="date"]:before {
+  color: transparent;
+  background: none;
+  display: block;
+  font-family: 'FontAwesome';
+  content: '\f073';
+  /* This is the calendar icon in FontAwesome */
+  width: 15px;
+  height: 20px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: coral;
+}
+input[type="date"]::-webkit-inner-spin-button, 
+input[type="date"]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+.form-control.is-invalid {
+  /* background-image: "" !important; */
+  border-color: #dc3545;
+    padding-right: 2.25rem;
+    background-repeat: no-repeat;
+    background-position: center right calc(2.25rem / 4);
+    background-size: calc(2.25rem / 2) calc(2.25rem / 2);
+    background-image: none !important;
+}
+.current-tab {
+  cursor: pointer;
+  border-bottom: 3px solid coral
+}
+
+.margin-l-20 {
+  margin-left: 20px;
+}
+
+.search-btn {
+  position: relative;
+  top: 15px;
+}
+
+.margin-5-15 {
+  margin: 5px 15px;
+}
+.margin-0 {
+  margin: 0px;
+}
+.margin-t-5 {
+  margin-top: 5px;
+}
