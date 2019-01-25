@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
@@ -32,6 +33,7 @@ import { AuthGuard } from './auth.guard'
     ToastContainerModule,
     FormsModule,
     HttpClientModule,
+    NgxPaginationModule,
     RouterModule.forRoot([
       { path: 'login', component: loginComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },

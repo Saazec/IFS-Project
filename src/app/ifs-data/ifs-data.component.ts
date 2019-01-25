@@ -17,13 +17,14 @@ export class IFSDataComponent implements OnInit {
   maxLength: boolean;
   reportedErrorMsg = false;
   formData: any = {};
+  p: number = 1;
   constructor(private ifsService: IfsServiceService) { }
   ngOnInit() {
     this.ifsService.getAll().subscribe(
       data => {
         this.ifsRecords = data;
         this.originalIfsData = JSON.parse(JSON.stringify(data));
-        this.paginate();
+        // this.paginate();
         // this.maxLength = Math.ceil(this.ifsRecords.length /3);
       },
       error => this.errorMsg = <any>error
@@ -107,7 +108,7 @@ export class IFSDataComponent implements OnInit {
       this.ifsRecords = this.originalIfsData;
       this.maxLength = false;
       this.paginationCounter = 0;
-      this.paginate();
+      // this.paginate();
     }
   }
 

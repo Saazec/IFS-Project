@@ -14,12 +14,12 @@
       </div>
 
       <div class="form-group margin-l-20">
-        <label for="ifsSearchCategory">Category</label>
+        <label for="ifsSearchCategory">Source</label>
         <input class="form-control form-control-sm"
                type="text"
                name="ifsSearchCategory"
                id="ifsSearchCategory"
-               (keyup)="loadDefault(ifsSearchCategory)"
+               
                [(ngModel)]="ifsSearchCategory">
       </div>
 
@@ -324,14 +324,19 @@
 
   </table>
 </form>
-<div class="d-flex justify-content-end">
+<!-- <div class="d-flex justify-content-end">
   <button class="btn btn-sm"
           [ngClass]="paginationCounter == 0 ? 'disable-element' : ''"
           (click)="previous()">&lt; Previous </button>
   <button class="btn btn-sm"
           [ngClass]="maxLength ? 'disable-element' : ''"
           (click)="next()">Next &gt;</button>
+</div> -->
+
+<div class="d-flex justify-content-end">
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
+
 <table class="table table-sm">
   <tr>
     <th>Edit/Save</th>
@@ -342,10 +347,10 @@
     <th>Reported Date</th>
     <th>Created On</th>
     <th>Engine Score</th>
-    <!-- <th>Manual Input</th> -->
+    <!-- <th>Manual Input</th>  slice:0:3 -->
     <th>Last Saved User</th>
   </tr>
-  <tr *ngFor="let item of ifsRecords | slice:0:3">
+  <tr *ngFor="let item of ifsRecords | paginate: { itemsPerPage: 3, currentPage: p } ">
     <!-- <ifs-record [record] = "item"></ifs-record> -->
     <td style="white-space:nowrap;">
       <i class="fa fa-pencil fa-fw cursor-pointer"

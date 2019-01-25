@@ -15,6 +15,7 @@ export class OperationalDataComponent implements OnInit {
   pointer: number = 0;
   totalRecords: number;
   disableNext: boolean = false;
+  p: number = 1;
   constructor(private odservice: ODService) { }
 
   ngOnInit() {

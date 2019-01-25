@@ -19,7 +19,7 @@
                type="text"
                name="ODSearch"
                id="ODSearch"
-               (keyup)="checkIfEmpty(ODSearch)"
+               
                [(ngModel)]="ODSearch">
       </div>
 
@@ -31,7 +31,7 @@
     </div>
   </div>
 </div>
-<div class="d-flex justify-content-end">
+<!-- <div class="d-flex justify-content-end"> *********    (keyup)="checkIfEmpty(ODSearch)" ***********
   <button class="btn btn-sm"
           [ngClass]="{'disable-element': pointer == 0}"
           (click)="previous()"
@@ -39,6 +39,10 @@
   <button class="btn btn-sm"
   (click)="next()" [ngClass]="{'disable-element': disableNext}"
           type="button">Next &gt;</button>
+</div> -->
+
+<div class="d-flex justify-content-end">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 <div>
   <table class="table table-sm">
@@ -51,7 +55,7 @@
       <th>Impact</th>
     </tr>
 
-    <tr *ngFor="let item of odData | slice: 0: 3">
+    <tr *ngFor="let item of odData | paginate: { itemsPerPage: 3, currentPage: p }">
       <td>{{ item.serial }}</td>
       <td>{{ item.date }}</td>
       <td>{{ item.time }}</td>
