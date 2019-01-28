@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IFS } from './IFS';
 import { IfsServiceService } from '../ifs-service.service'
 import { from, Observable } from 'rxjs';
+import { loginComponent } from '../login/login.component';
 
 @Component({
   selector: 'ifs-data',
@@ -18,6 +19,7 @@ export class IFSDataComponent implements OnInit {
   reportedErrorMsg = false;
   formData: any = {};
   p: number = 1;
+  currentIndex: number;
   constructor(private ifsService: IfsServiceService) { }
   ngOnInit() {
     this.ifsService.getAll().subscribe(
@@ -112,37 +114,16 @@ export class IFSDataComponent implements OnInit {
     }
   }
 
-  enableEditing(event, item) {
-
-    let position = item.caseNumber;
-
-    let saveBtn = document.getElementById(position + 'saveBtn');
-    saveBtn.classList.remove('disable-element');
-
-    let feedbackElement = document.getElementById(position + 'feedbacktype');
-    feedbackElement.contentEditable = "true";
-
-    let sourceElement = document.getElementById(position + 'source');
-    sourceElement.contentEditable = "true";
-
-    let divisionElement = document.getElementById(position + 'division');
-    divisionElement.contentEditable = "true";
-
-    let reportedElement = document.getElementById(position + 'reported');
-    reportedElement.contentEditable = "true";
-
-    let createdElement = document.getElementById(position + 'created');
-    createdElement.contentEditable = "true";
-
-    let scoreElement = document.getElementById(position + 'score');
-    scoreElement.contentEditable = "true";
-
-    let savedElement = document.getElementById(position + 'saved');
-    savedElement.contentEditable = "true";
-
+  enableEditing(event, item, index) {
+    this.currentIndex = index;
+    console.log(index);
+    event.target.nextElementSibling.classList.remove('disable-element');
   }
 
   saveRecord(event, item) {
+    this.currentIndex = null;
+    // event.target.nextElementSibling.classList.add('disable-element');
+
     let position = item.caseNumber;
 
     let saveBtn = document.getElementById(position + 'saveBtn');
@@ -222,7 +203,6 @@ export class IFSDataComponent implements OnInit {
       let startDate = new Date(_created[2], _created[1], _created[0]);
       let endDate = new Date(_reported[2], _reported[1], _reported[0]);
       if(startDate > endDate) {
-        // alert('arey bhai bhai bhai bhai');
         this.reportedErrorMsg = true;
       }
     }

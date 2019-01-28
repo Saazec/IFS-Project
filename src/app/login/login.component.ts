@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { invalid } from "@angular/compiler/src/render3/view/util";
 import { Router } from '@angular/router';
 import { from } from "rxjs";
@@ -8,7 +8,7 @@ import { AuthServiceService } from "../auth-service.service";
     selector: 'login-form',
     templateUrl: './login.component.html'
 })
-export class loginComponent {
+export class loginComponent implements OnInit {
 
     loginModel: any = {};
 
@@ -19,6 +19,11 @@ export class loginComponent {
     invalidMsg: boolean = false;
     toggle(errorMsg) {
         console.log(errorMsg);
+    }
+    ngOnInit() {
+        if(this.authService.checkIfLoggedIn()) {
+            this.router.navigate(['/dashboard']);
+        }
     }
     authorize(event, userName, password, role) {
         if (!userName) {

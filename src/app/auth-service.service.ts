@@ -6,11 +6,11 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthServiceService {
 
-  private loggedInStatus: boolean = false;
+  private loggedInStatus: boolean = this.checkIfLoggedIn();
   constructor() { }
 
   // using Behaviour Subject
-  private status = new BehaviorSubject<boolean>(false);
+  private status = new BehaviorSubject<boolean>(this.checkIfLoggedIn());
   status$ = this.status.asObservable()
 
   set loggedIn(value: boolean) {
@@ -46,6 +46,13 @@ export class AuthServiceService {
       this.loggedInStatus = false;
       localStorage.removeItem('userData');
       this.loggedIn = false;
+    }
+  }
+  checkIfLoggedIn(): boolean {
+    if(localStorage.getItem('userData')) {
+      return true;
+    } else {
+      return false
     }
   }
 }

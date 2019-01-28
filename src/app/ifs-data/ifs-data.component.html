@@ -19,7 +19,7 @@
                type="text"
                name="ifsSearchCategory"
                id="ifsSearchCategory"
-               
+               placeholder="source"
                [(ngModel)]="ifsSearchCategory">
       </div>
 
@@ -314,7 +314,7 @@
       <td></td>
       <td class="d-flex justify-content-end">
         <div class="align-items-end justify-content-end">
-          <button type="submit"
+          <button type="submit" [disabled]="!f.valid || reportedErrorMsg"
                   (click)="checkthis(formData, f)"
                   class="btn btn-danger capsule-btn add-btn">Add</button>
         </div>
@@ -350,29 +350,29 @@
     <!-- <th>Manual Input</th>  slice:0:3 -->
     <th>Last Saved User</th>
   </tr>
-  <tr *ngFor="let item of ifsRecords | paginate: { itemsPerPage: 3, currentPage: p } ">
+  <tr *ngFor="let item of ifsRecords | paginate: { itemsPerPage: 3, currentPage: p }; let i = index">
     <!-- <ifs-record [record] = "item"></ifs-record> -->
     <td style="white-space:nowrap;">
       <i class="fa fa-pencil fa-fw cursor-pointer"
-         (click)="enableEditing($event, item)"
+         (click)="enableEditing($event, item, i)"
          aria-hidden="true"></i>
-      <i class="fa fa-save fa-fw cursor-pointer disable-element"
+      <i class="fa fa-save fa-fw cursor-pointer" [ngClass]="currentIndex != i ? 'disable-element': ''"
          id="{{item.caseNumber + 'saveBtn'}}"
          (click)="saveRecord($event, item)"
          aria-hidden="true"></i>
     </td>
     <td>{{ item.caseNumber }}</td>
-    <td id="{{item.caseNumber + 'feedbacktype'}}">{{ item.feedbackType }}</td>
-    <td id="{{item.caseNumber + 'source'}}">{{ item.source }}</td>
-    <td id="{{item.caseNumber + 'division'}}">{{ item.division }}</td>
-    <td id="{{item.caseNumber + 'reported'}}">{{ item.reportedDate }}</td>
-    <td id="{{item.caseNumber + 'created'}}">{{ item.createdOn }}</td>
-    <td id="{{item.caseNumber + 'score'}}">{{ item.engineScore }}</td>
+    <td><input type="text" value="{{ item.feedbackType }}" [ngClass]="currentIndex != i ? 'input-disabled': ''" /> </td>
+    <td id="{{item.caseNumber + 'source'}}"> <input [ngClass]="currentIndex != i ? 'input-disabled': ''" type="text" name="" id="" value="{{ item.source }}"></td>
+    <td id="{{item.caseNumber + 'division'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''" type="text" name="" id="" value="{{ item.division }}"></td>
+    <td id="{{item.caseNumber + 'reported'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''" type="text" name="" id="" value="{{ item.reportedDate }}"></td>
+    <td id="{{item.caseNumber + 'created'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''" type="text" name="" id="" value="{{ item.createdOn }}"></td>
+    <td id="{{item.caseNumber + 'score'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''" type="text" name="" id="" value="{{ item.engineScore }}"></td>
     <!-- <td><select class="input-control input-control-sm"
               style="padding: 0px;">
         <option value="ES">ES</option>
         <option value="AS">AS</option>
       </select></td> -->
-    <td id="{{item.caseNumber + 'saved'}}">{{ item.lastSaved }}</td>
+    <td id="{{item.caseNumber + 'saved'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''" type="text" name="" id="" value="{{ item.lastSaved }}"></td>
   </tr>
 </table>
