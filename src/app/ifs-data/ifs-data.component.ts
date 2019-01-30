@@ -122,49 +122,50 @@ export class IFSDataComponent implements OnInit {
 
   saveRecord(event, item) {
     this.currentIndex = null;
+   
     // event.target.nextElementSibling.classList.add('disable-element');
 
-    let position = item.caseNumber;
+    // let position = item.caseNumber;
 
-    let saveBtn = document.getElementById(position + 'saveBtn');
-    saveBtn.classList.add('disable-element');
+    // let saveBtn = document.getElementById(position + 'saveBtn');
+    // saveBtn.classList.add('disable-element');
 
-    let feedbackElement = document.getElementById(position + 'feedbacktype');
-    feedbackElement.contentEditable = "false";
+    // let feedbackElement = document.getElementById(position + 'feedbacktype');
+    // feedbackElement.contentEditable = "false";
 
-    let sourceElement = document.getElementById(position + 'source');
-    sourceElement.contentEditable = "false";
+    // let sourceElement = document.getElementById(position + 'source');
+    // sourceElement.contentEditable = "false";
 
-    let divisionElement = document.getElementById(position + 'division');
-    divisionElement.contentEditable = "false";
+    // let divisionElement = document.getElementById(position + 'division');
+    // divisionElement.contentEditable = "false";
 
-    let reportedElement = document.getElementById(position + 'reported');
-    reportedElement.contentEditable = "false";
+    // let reportedElement = document.getElementById(position + 'reported');
+    // reportedElement.contentEditable = "false";
 
-    let createdElement = document.getElementById(position + 'created');
-    createdElement.contentEditable = "false";
+    // let createdElement = document.getElementById(position + 'created');
+    // createdElement.contentEditable = "false";
 
-    let scoreElement = document.getElementById(position + 'score');
-    scoreElement.contentEditable = "false";
+    // let scoreElement = document.getElementById(position + 'score');
+    // scoreElement.contentEditable = "false";
 
-    let savedElement = document.getElementById(position + 'saved');
-    savedElement.contentEditable = "false";
+    // let savedElement = document.getElementById(position + 'saved');
+    // savedElement.contentEditable = "false";
 
-    let source = sourceElement.textContent;
-    let feedbackType = feedbackElement.textContent;
-    let division = divisionElement.textContent;
-    let reportedDate = reportedElement.textContent;
-    let createdOn = createdElement.textContent;
-    let engineScore = scoreElement.textContent;
-    let lastSaved = savedElement.textContent;
+    // let source = sourceElement.textContent;
+    // let feedbackType = feedbackElement.textContent;
+    // let division = divisionElement.textContent;
+    // let reportedDate = reportedElement.textContent;
+    // let createdOn = createdElement.textContent;
+    // let engineScore = scoreElement.textContent;
+    // let lastSaved = savedElement.textContent;
 
-    this.originalIfsData[item.caseNumber - 1].source = source;
-    this.originalIfsData[item.caseNumber - 1].feedbackType = feedbackType;
-    this.originalIfsData[item.caseNumber - 1].division = division;
-    this.originalIfsData[item.caseNumber - 1].reportedDate = reportedDate;
-    this.originalIfsData[item.caseNumber - 1].createdOn = createdOn;
-    this.originalIfsData[item.caseNumber - 1].engineScore = engineScore;
-    this.originalIfsData[item.caseNumber - 1].lastSaved = lastSaved;
+    // this.originalIfsData[item.caseNumber - 1].source = source;
+    // this.originalIfsData[item.caseNumber - 1].feedbackType = feedbackType;
+    // this.originalIfsData[item.caseNumber - 1].division = division;
+    // this.originalIfsData[item.caseNumber - 1].reportedDate = reportedDate;
+    // this.originalIfsData[item.caseNumber - 1].createdOn = createdOn;
+    // this.originalIfsData[item.caseNumber - 1].engineScore = engineScore;
+    // this.originalIfsData[item.caseNumber - 1].lastSaved = lastSaved;
   }
   previous() {
     this.paginationCounter--;
@@ -176,7 +177,7 @@ export class IFSDataComponent implements OnInit {
     this.paginationCounter++;
     this.paginate();
   }
-  checkthis(formData, form) {
+  addIfsRecord(formData, form) {
     if (form.valid) {
       let param: IFS = {
         caseNumber: formData.caseNumber,
@@ -190,6 +191,7 @@ export class IFSDataComponent implements OnInit {
       };
       this.ifsRecords.push(param);
       this.originalIfsData.push(param);
+      this.ifsService.add(param);
     } else {
       return;
     }

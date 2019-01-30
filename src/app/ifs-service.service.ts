@@ -18,6 +18,11 @@ export class IfsServiceService {
       );
   }
 
+  add(data: IFS): void {
+    console.log(data);
+    // Post request will come here
+  }
+
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';
     if(err.error instanceof ErrorEvent) {
