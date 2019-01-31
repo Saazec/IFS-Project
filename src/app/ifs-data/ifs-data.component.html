@@ -129,6 +129,7 @@
                  type="date"
                  name="incidentDate"
                  id="incidentDate"
+                 [min]="getTodaysDate()"
                  required
                  onkeydown="return false"
                  #incidentDate="ngModel"
@@ -150,6 +151,7 @@
                  type="date"
                  name="createdOn"
                  id="createdOn"
+                 [min]="getTodaysDate()"
                  required
                  (change)="checkDate(this, $event, formData.createdOn, formData.reportedDate)"
                  onkeydown="return false"
@@ -175,6 +177,7 @@
                  type="date"
                  name="reportedDate"
                  id="reportedDate"
+                 [min]="getTodaysDate()"
                  (change)="checkDate(this, $event, formData.createdOn, formData.reportedDate)"
                  required
                  onkeydown="return false"
@@ -315,8 +318,8 @@
       <td class="d-flex justify-content-end">
         <div class="align-items-end justify-content-end">
           <button type="submit"
-                  [disabled]="!f.valid || reportedErrorMsg"
-                  (click)="addIfsRecord(formData, f); f.reset()"
+                  [disabled]="!f.valid"
+                  (click)="addIfsRecord(formData, f)"
                   class="btn btn-danger capsule-btn add-btn">Add</button>
         </div>
       </td>
@@ -366,45 +369,40 @@
       </td>
       <td>{{ item.caseNumber }}</td>
       <td><input type="text"
-               value="{{ item.feedbackType }}"
                [ngClass]="currentIndex != i ? 'input-disabled': ''"
-               name="i+feedbackType"
-               id="feedback-{{ item.caseNumber }}" /> </td>
+               [name]="item.caseNumber+'feedbackType'"
+               id="feedback-{{ item.caseNumber }}"
+               [(ngModel)]="item.feedbackType"> </td>
       <td id="{{item.caseNumber + 'source'}}"> <input [ngClass]="currentIndex != i ? 'input-disabled': ''"
                type="text"
-               name=""
-               id=""
-               value="{{item.source}}"></td>
+               [name]="item.caseNumber+'source'"
+               id="source-{{ item.caseNumber }}"
+               [(ngModel)]="item.source"></td>
       <td id="{{item.caseNumber + 'division'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''"
                type="text"
-               name=""
-               id=""
-               value="{{item.division}}"></td>
+               [name]="item.caseNumber+'division'"
+               id="division-{{ item.caseNumber }}"
+               [(ngModel)]="item.division"></td>
       <td id="{{item.caseNumber + 'reported'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''"
                type="text"
-               name=""
-               id=""
-               value="{{ item.reportedDate }}"></td>
+               [name]="item.caseNumber+'reportedDate'"
+               id="reportedDate-{{ item.caseNumber }}"
+               [(ngModel)]="item.reportedDate"></td>
       <td id="{{item.caseNumber + 'created'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''"
                type="text"
-               name=""
-               id=""
-               value="{{ item.createdOn }}"></td>
+               [name]="item.caseNumber+'createdOn'"
+               id="createdOn-{{ item.caseNumber }}"
+               [(ngModel)]="item.createdOn"></td>
       <td id="{{item.caseNumber + 'score'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''"
                type="text"
-               name=""
-               id=""
-               value="{{ item.engineScore }}"></td>
-      <!-- <td><select class="input-control input-control-sm"
-              style="padding: 0px;">
-        <option value="ES">ES</option>
-        <option value="AS">AS</option>
-      </select></td> -->
+               [name]="item.caseNumber+'engineScore'"
+               id="engineScore-{{ item.caseNumber }}"
+               [(ngModel)]="item.engineScore"></td>
       <td id="{{item.caseNumber + 'saved'}}"><input [ngClass]="currentIndex != i ? 'input-disabled': ''"
                type="text"
-               name=""
-               id=""
-               value="{{ item.lastSaved }}"></td>
+               [name]="item.caseNumber+'lastSaved'"
+               id="lastSaved-{{ item.caseNumber }}"
+               [(ngModel)]="item.lastSaved"></td>
     </tr>
   </table>
 </form>

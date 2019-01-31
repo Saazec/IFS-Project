@@ -95,6 +95,10 @@ export class OperationalDataComponent implements OnInit {
   }
 
   searchOnChange(searchKey) {
+    if (!searchKey) {
+      this.odData = this.originalData;
+      return;
+    }
     let _searchKey = searchKey.split('-');
     let _searcDate = ""+ _searchKey[2] + '/' + _searchKey[1] + '/'+ _searchKey[0];
     // this.filterRecords(_searcDate);

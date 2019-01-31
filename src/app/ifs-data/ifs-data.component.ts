@@ -31,18 +31,14 @@ export class IFSDataComponent implements OnInit {
       },
       error => this.errorMsg = <any>error
     )
-
-    document.getElementById('createdOn').setAttribute('min', this.getTodaysDate());
-    document.getElementById('reportedDate').setAttribute('min', this.getTodaysDate());
-    document.getElementById('incidentDate').setAttribute('min', this.getTodaysDate());
   }
 
   getTodaysDate(): string {
     let today = new Date();
     let yyyy = today.getFullYear();
-    let mm = "" + today.getMonth()+1;
+    let mm = "" + today.getMonth() + 1;
     let dd = today.getDate();
-    if(mm.length < 2) {
+    if (mm.length < 2) {
       mm = '0' + mm;
     }
     let todaysDate = yyyy + '-' + mm + '-' + dd;
@@ -102,6 +98,8 @@ export class IFSDataComponent implements OnInit {
         this.paginationCounter = 0;
       }
       // this.paginate();
+    } else {
+      this.ifsRecords = this.originalIfsData;
     }
   }
 
@@ -117,12 +115,23 @@ export class IFSDataComponent implements OnInit {
   enableEditing(event, item, index) {
     this.currentIndex = index;
     console.log(index);
-    event.target.nextElementSibling.classList.remove('disable-element');
+    // event.target.nextElementSibling.classList.remove('disable-element');
   }
 
-  saveRecord(event, item) {
+  saveRecord(event, data) {
     this.currentIndex = null;
-   
+    console.log(data);
+    if (data) {
+      this.originalIfsData[data.caseNumber - 1].source = data.source;
+      this.originalIfsData[data.caseNumber - 1].feedbackType = data.feedbackType;
+      this.originalIfsData[data.caseNumber - 1].division = data.division;
+      this.originalIfsData[data.caseNumber - 1].reportedDate = data.reportedDate;
+      this.originalIfsData[data.caseNumber - 1].createdOn = data.createdOn;
+      this.originalIfsData[data.caseNumber - 1].engineScore = data.engineScore;
+      this.originalIfsData[data.caseNumber - 1].lastSaved = data.lastSaved;
+    }
+    this.ifsRecords = this.originalIfsData;
+
     // event.target.nextElementSibling.classList.add('disable-element');
 
     // let position = item.caseNumber;
@@ -178,7 +187,7 @@ export class IFSDataComponent implements OnInit {
     this.paginate();
   }
   addIfsRecord(formData, form) {
-    if (form.valid) {
+    if (form.valid && !this.reportedErrorMsg) {
       let param: IFS = {
         caseNumber: formData.caseNumber,
         createdOn: formData.createdOn,
@@ -192,6 +201,8 @@ export class IFSDataComponent implements OnInit {
       this.ifsRecords.push(param);
       this.originalIfsData.push(param);
       this.ifsService.add(param);
+      form.reset();
+      form.resetForm();
     } else {
       return;
     }
@@ -199,23 +210,34 @@ export class IFSDataComponent implements OnInit {
 
   checkDate(element, event, createdDate, reportedDate) {
     this.reportedErrorMsg = false;
-    if(createdDate && reportedDate) {
+    if (createdDate && reportedDate) {
       let _created = createdDate.split('-');
       let _reported = reportedDate.split('-')
-      let startDate = new Date(_created[2], _created[1], _created[0]);
-      let endDate = new Date(_reported[2], _reported[1], _reported[0]);
-      if(startDate > endDate) {
+      if (+_created[0] > +_reported[0]) {
         this.reportedErrorMsg = true;
+        return;
+      }
+      if (+_created[1] > +_reported[1]) {
+        this.reportedErrorMsg = true;
+        return;
+      }
+      if (+_created[2] > +_reported[2]) {
+        this.reportedErrorMsg = true;
+        return;
       }
     }
   }
 
   searchOnChange(searchDate) {
+    if (!searchDate) {
+      this.ifsRecords = this.originalIfsData;
+      return;
+    }
     let _searchDate = searchDate.split('-');
     let _date = "" + _searchDate[2] + '/' + _searchDate[1] + '/' + _searchDate[0];
     let filteredArray: IFS[] = [];
     this.originalIfsData.forEach(record => {
-      if(record.reportedDate == _date) {
+      if (record.reportedDate == _date) {
         filteredArray.push(record)
       }
     });
@@ -226,7 +248,7 @@ export class IFSDataComponent implements OnInit {
     //   this.paginationCounter = 0;
     //   this.paginate();
     // }
-    if(this.ifsRecords.length <= 3 ) {
+    if (this.ifsRecords.length <= 3) {
       this.maxLength = true;
       this.paginationCounter = 0;
     }
