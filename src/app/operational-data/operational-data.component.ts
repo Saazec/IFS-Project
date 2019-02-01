@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ODService } from '../od.service';
 import { IOD } from './IOD';
 import { element } from '@angular/core/src/render3';
-
+import * as _ from 'lodash';
 @Component({
   selector: 'operational-data',
   templateUrl: './operational-data.component.html',
@@ -28,7 +28,7 @@ export class OperationalDataComponent implements OnInit {
     )
   }
 
-  paginate() {
+  paginate() {  
     this.totalRecords = Math.ceil(this.odData.length / 3);
 
     if(this.pointer == 0) {
@@ -82,6 +82,8 @@ export class OperationalDataComponent implements OnInit {
         this.pointer = 0;
         this.disableNext = true;
       }
+    } else {
+      this.odData = this.originalData;
     }
   }
 

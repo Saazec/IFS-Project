@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   }
 
   loadTab(tabName: string) {
-    if(tabName === 'ifsTab') {
+    if (tabName === 'ifsTab') {
       this.currentTemplate = true;
     } else {
       this.currentTemplate = false;

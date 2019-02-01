@@ -18,23 +18,23 @@ export class ChangePasswordComponent implements OnInit {
   invalidMsg: boolean = false;
   validMsg: boolean = false;
   changePassword(event, currentPassword, password, reentered) {
-    if(!currentPassword) {
+    if (!currentPassword) {
       this.currentPasswordErr = true;
       return;
     } else if (!password) {
       this.pass1ErrorMsg = true;
       return;
-    } else if(!reentered) {
+    } else if (!reentered) {
       this.reenteredErrorMsg = true;
       return;
     } else {
-      if(currentPassword !== 'whik' || password != reentered) {
+      if (currentPassword !== 'whik' || password != reentered) {
         this.invalidMsg = true;
         return
       } else {
         this.validMsg = true;
         setTimeout(() => {
-        this.router.navigate(['/login']);          
+          this.router.navigate(['/login']);
         }, 1000);
       }
     }
