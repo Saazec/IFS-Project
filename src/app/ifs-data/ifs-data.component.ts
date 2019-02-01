@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IFS } from './IFS';
 import { IfsServiceService } from '../ifs-service.service'
 import { from, Observable } from 'rxjs';
-import { loginComponent } from '../login/login.component';
-
+import { loginComponent } from '../login/login.component'; 
 @Component({
   selector: 'ifs-data',
   templateUrl: './ifs-data.component.html',
@@ -26,8 +25,6 @@ export class IFSDataComponent implements OnInit {
       data => {
         this.ifsRecords = data;
         this.originalIfsData = JSON.parse(JSON.stringify(data));
-        // this.paginate();
-        // this.maxLength = Math.ceil(this.ifsRecords.length /3);
       },
       error => this.errorMsg = <any>error
     )
@@ -131,50 +128,6 @@ export class IFSDataComponent implements OnInit {
       this.originalIfsData[data.caseNumber - 1].lastSaved = data.lastSaved;
     }
     this.ifsRecords = this.originalIfsData;
-
-    // event.target.nextElementSibling.classList.add('disable-element');
-
-    // let position = item.caseNumber;
-
-    // let saveBtn = document.getElementById(position + 'saveBtn');
-    // saveBtn.classList.add('disable-element');
-
-    // let feedbackElement = document.getElementById(position + 'feedbacktype');
-    // feedbackElement.contentEditable = "false";
-
-    // let sourceElement = document.getElementById(position + 'source');
-    // sourceElement.contentEditable = "false";
-
-    // let divisionElement = document.getElementById(position + 'division');
-    // divisionElement.contentEditable = "false";
-
-    // let reportedElement = document.getElementById(position + 'reported');
-    // reportedElement.contentEditable = "false";
-
-    // let createdElement = document.getElementById(position + 'created');
-    // createdElement.contentEditable = "false";
-
-    // let scoreElement = document.getElementById(position + 'score');
-    // scoreElement.contentEditable = "false";
-
-    // let savedElement = document.getElementById(position + 'saved');
-    // savedElement.contentEditable = "false";
-
-    // let source = sourceElement.textContent;
-    // let feedbackType = feedbackElement.textContent;
-    // let division = divisionElement.textContent;
-    // let reportedDate = reportedElement.textContent;
-    // let createdOn = createdElement.textContent;
-    // let engineScore = scoreElement.textContent;
-    // let lastSaved = savedElement.textContent;
-
-    // this.originalIfsData[item.caseNumber - 1].source = source;
-    // this.originalIfsData[item.caseNumber - 1].feedbackType = feedbackType;
-    // this.originalIfsData[item.caseNumber - 1].division = division;
-    // this.originalIfsData[item.caseNumber - 1].reportedDate = reportedDate;
-    // this.originalIfsData[item.caseNumber - 1].createdOn = createdOn;
-    // this.originalIfsData[item.caseNumber - 1].engineScore = engineScore;
-    // this.originalIfsData[item.caseNumber - 1].lastSaved = lastSaved;
   }
   previous() {
     this.paginationCounter--;

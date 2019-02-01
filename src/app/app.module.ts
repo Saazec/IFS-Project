@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
+// import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,7 +31,6 @@ import { AuthGuard } from './auth.guard'
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ToastContainerModule,
     FormsModule,
     HttpClientModule,
     NgxPaginationModule,
