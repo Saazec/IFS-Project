@@ -6,6 +6,10 @@ html,body{
   height: 100%,
 }
 
+#toast-container > div {
+  opacity:1;
+}
+
 div.card-header {
  font-size: large;
 }

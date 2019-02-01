@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { IFS } from './IFS';
 import { IfsServiceService } from '../ifs-service.service'
 import { from, Observable } from 'rxjs';
@@ -19,7 +20,7 @@ export class IFSDataComponent implements OnInit {
   formData: any = {};
   p: number = 1;
   currentIndex: number;
-  constructor(private ifsService: IfsServiceService) { }
+  constructor(private ifsService: IfsServiceService, private toastr: ToastrService) { }
   ngOnInit() {
     this.ifsService.getAll().subscribe(
       data => {
@@ -90,9 +91,8 @@ export class IFSDataComponent implements OnInit {
         }
       })
       this.ifsRecords = filteredArray;
-      if (this.ifsRecords.length < 3) {
-        this.maxLength = true;
-        this.paginationCounter = 0;
+      if (!this.ifsRecords.length) {
+        this.toastr.error('No Data Found', 'Error');
       }
       // this.paginate();
     } else {
@@ -112,6 +112,8 @@ export class IFSDataComponent implements OnInit {
   enableEditing(event, item, index) {
     this.currentIndex = index;
     console.log(index);
+    this.toastr.warning('Editing has been enabled');
+    
     // event.target.nextElementSibling.classList.remove('disable-element');
   }
 
@@ -128,6 +130,7 @@ export class IFSDataComponent implements OnInit {
       this.originalIfsData[data.caseNumber - 1].lastSaved = data.lastSaved;
     }
     this.ifsRecords = this.originalIfsData;
+    this.toastr.success('Successfully updated record', 'Updated');
   }
   previous() {
     this.paginationCounter--;
@@ -156,6 +159,7 @@ export class IFSDataComponent implements OnInit {
       this.ifsService.add(param);
       form.reset();
       form.resetForm();
+      this.toastr.success('New record has been added successfully.', 'Added !');
     } else {
       return;
     }
