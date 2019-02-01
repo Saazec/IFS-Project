@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import * as _ from 'lodash';
 import { IFS } from './IFS';
 import { IfsServiceService } from '../ifs-service.service'
 import { from, Observable } from 'rxjs';
@@ -59,38 +60,44 @@ export class IFSDataComponent implements OnInit {
   filterRecords(filterBy) {
     if (filterBy) {
       filterBy = filterBy.toLowerCase();
-      let rgx = /filterBy/gi;
-      let filteredArray: IFS[] = [];
-      this.originalIfsData.forEach(record => {
-        for (let key in record) {
-          if (String(record.caseNumber).includes(filterBy)) {
-            filteredArray.push(record);
-            return;
-          } else if (record.createdOn.toLowerCase().includes(filterBy)) {
-            filteredArray.push(record);
-            return;
-          } else if (record.division.toLowerCase().includes(filterBy)) {
-            filteredArray.push(record);
-            return;
-          } else if (record.engineScore.toLowerCase().includes(filterBy)) {
-            filteredArray.push(record);
-            return;
-          } else if (record.feedbackType.toLowerCase().includes(filterBy)) {
-            filteredArray.push(record);
-            return;
-          } else if (record.lastSaved.toLowerCase().includes(filterBy)) {
-            filteredArray.push(record);
-            return;
-          } else if (record.reportedDate.toLowerCase().includes(filterBy)) {
-            filteredArray.push(record);
-            return;
-          } else if (record.source.toLowerCase().includes(filterBy)) {
-            filteredArray.push(record);
-            return;
-          }
-        }
-      })
-      this.ifsRecords = filteredArray;
+      // let rgx = /filterBy/gi;
+      // let filteredArray: IFS[] = [];
+
+      let _matching: IFS[] = this.searchFn(filterBy);
+
+      /**
+       * uncomment the below code to enable gloabl search
+       */
+      // this.originalIfsData.forEach(record => {
+      //   for (let key in record) {
+      //     if (String(record.caseNumber).includes(filterBy)) {
+      //       filteredArray.push(record);
+      //       return;
+      //     } else if (record.createdOn.toLowerCase().includes(filterBy)) {
+      //       filteredArray.push(record);
+      //       return;
+      //     } else if (record.division.toLowerCase().includes(filterBy)) {
+      //       filteredArray.push(record);
+      //       return;
+      //     } else if (record.engineScore.toLowerCase().includes(filterBy)) {
+      //       filteredArray.push(record);
+      //       return;
+      //     } else if (record.feedbackType.toLowerCase().includes(filterBy)) {
+      //       filteredArray.push(record);
+      //       return;
+      //     } else if (record.lastSaved.toLowerCase().includes(filterBy)) {
+      //       filteredArray.push(record);
+      //       return;
+      //     } else if (record.reportedDate.toLowerCase().includes(filterBy)) {
+      //       filteredArray.push(record);
+      //       return;
+      //     } else if (record.source.toLowerCase().includes(filterBy)) {
+      //       filteredArray.push(record);
+      //       return;
+      //     }
+      //   }
+      // })
+      this.ifsRecords = _matching;
       if (!this.ifsRecords.length) {
         this.toastr.error('No Data Found', 'Error');
       }
@@ -98,6 +105,13 @@ export class IFSDataComponent implements OnInit {
     } else {
       this.ifsRecords = this.originalIfsData;
     }
+  }
+
+  searchFn(searchKey: string): IFS[] {
+    let _searchKey = searchKey.toLowerCase();
+    return _.filter(this.originalIfsData, item => {
+      return item.source.indexOf(_searchKey) > -1;
+    })
   }
 
   loadDefault(searchKey) {
