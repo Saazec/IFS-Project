@@ -144,18 +144,21 @@ export class IFSDataComponent implements OnInit {
   }
   addIfsRecord(formData, form) {
     if (form.valid && !this.reportedErrorMsg) {
+      let _formatedDate = formData.reportedDate.split('-');
+      let _date = _formatedDate[2] + '/' + _formatedDate[1] + '/' + _formatedDate[0];
       let param: IFS = {
         caseNumber: formData.caseNumber,
         createdOn: formData.createdOn,
         division: formData.division,
         feedbackType: formData.feedbackType,
-        reportedDate: formData.reportedDate,
+        reportedDate: _date,
         source: formData.source,
         engineScore: 'EOS',
         lastSaved: 'Kathrine Langford'
       };
-      this.ifsRecords.push(param);
+      // this.ifsRecords.push(param);
       this.originalIfsData.push(param);
+      this.ifsRecords = this.originalIfsData;
       this.ifsService.add(param);
       form.reset();
       form.resetForm();
