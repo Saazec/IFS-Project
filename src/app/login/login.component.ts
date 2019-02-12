@@ -38,11 +38,10 @@ export class loginComponent implements OnInit {
         } else {
             if (userName === 'jhon' && password === 'whik' && role === 'user') {
                 this.authService.setUserData({
-                    name: 'Jhon Whik',
-                    role: 'user'
+                    userName, password
                 });
-                this.router.navigate(['/dashboard']);
-                this.authService.setLoggedIn(true);
+                // this.router.navigate(['/dashboard']);
+                // this.authService.setLoggedIn(true);
             } else {
                 this.invalidMsg = true;
             }
