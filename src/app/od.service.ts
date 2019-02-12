@@ -3,16 +3,17 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IOD } from './operational-data/IOD'
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { ApiService } from './api.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ODService {
 
-  private url = 'api/dummy/operational-data.json';
-  constructor(private http: HttpClient) { }
+  // private url = 'api/dummy/operational-data.json';
+  constructor(private http: HttpClient, private apiservice: ApiService) { }
 
   getAll(): Observable<IOD[]> {
-    return this.http.get<IOD[]>(this.url)
+    return this.apiservice.getData('operational')
       .pipe(
         tap(data => JSON.stringify(data)),
         catchError(this.errorHandler)

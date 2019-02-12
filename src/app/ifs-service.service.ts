@@ -3,15 +3,16 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IFS } from './ifs-data/IFS'
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { ApiService } from './api.service';
 @Injectable({
   providedIn: 'root'
 })
 export class IfsServiceService {
   private url = 'api/dummy/ifs-data.json';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private apiService: ApiService) { }
 
   getAll(): Observable<IFS[]> {
-    return this.http.get<IFS[]>(this.url)
+    return this.apiService.getData('ifs')
       .pipe(
         tap( data => JSON.stringify(data)),
         catchError(this.errorHandler)
