@@ -51,9 +51,17 @@ export class AuthServiceService {
 
   destroyUserData() {
     if (localStorage.getItem('userData')) {
-      this.loggedInStatus = false;
-      localStorage.removeItem('userData');
-      this.loggedIn = false;
+      
+      this.apiService.deleteData('token').subscribe(
+        _data => {
+          this.loggedInStatus = false;
+          localStorage.removeItem('userData');
+          this.loggedIn = false;
+        },
+        err => {
+          console.log(`Error ${JSON.parse(err)}`);
+        }
+      ) 
     }
   }
   checkIfLoggedIn(): boolean {

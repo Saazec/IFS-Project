@@ -41,9 +41,9 @@ export class ApiService {
 
   deleteData(url: string): Observable<any> {
     if (localStorage.getItem('userData')) {
-      this.headers.token = JSON.parse(localStorage.getItem('userData')).token || '';
+      this.headers.token = JSON.parse(localStorage.getItem('userData')).tokenId || '';
       this.headers.username = JSON.parse(localStorage.getItem('userData')).userName || '';
     }
-    return this.http.delete(this.baseurl, { headers: this.headers });
+    return this.http.delete(this.baseurl + url, { headers: this.headers });
   }
 }
