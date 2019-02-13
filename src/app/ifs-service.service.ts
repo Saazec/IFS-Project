@@ -28,6 +28,13 @@ export class IfsServiceService {
       )
   }
 
+  updateData(data: IFS): Observable<IFS[]> {
+    return this.apiService.putData('ifs', data)
+      .pipe(
+        tap(_data => JSON.stringify(_data)),
+        catchError(this.errorHandler)
+      )
+  }
 
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';

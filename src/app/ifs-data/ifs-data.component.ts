@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { IFS } from './IFS';
 import { IfsServiceService } from '../ifs-service.service'
 import { from, Observable } from 'rxjs';
-import { loginComponent } from '../login/login.component'; 
+import { loginComponent } from '../login/login.component';
 @Component({
   selector: 'ifs-data',
   templateUrl: './ifs-data.component.html',
@@ -127,24 +127,24 @@ export class IFSDataComponent implements OnInit {
     this.currentIndex = index;
     console.log(index);
     this.toastr.warning('Editing has been enabled');
-    
-    // event.target.nextElementSibling.classList.remove('disable-element');
   }
 
   saveRecord(event, data) {
     this.currentIndex = null;
-    console.log(data);
     if (data) {
-      this.originalIfsData[data.caseNumber - 1].source = data.source;
-      this.originalIfsData[data.caseNumber - 1].feedbackType = data.feedbackType;
-      this.originalIfsData[data.caseNumber - 1].division = data.division;
-      this.originalIfsData[data.caseNumber - 1].reportedDate = data.reportedDate;
-      this.originalIfsData[data.caseNumber - 1].createdOn = data.createdOn;
-      this.originalIfsData[data.caseNumber - 1].engineScore = data.engineScore;
-      this.originalIfsData[data.caseNumber - 1].lastSaved = data.lastSaved;
+      this.ifsService.updateData(data).subscribe(
+        _data => {
+          this.ifsRecords = _data;
+          this.originalIfsData = JSON.parse(JSON.stringify(_data));
+          // this.ifsRecords = this.originalIfsData;
+          this.toastr.success('Successfully updated record', 'Updated');
+        },
+        err => {
+          this.toastr.error(err, 'Error');
+        }
+      )
     }
-    this.ifsRecords = this.originalIfsData;
-    this.toastr.success('Successfully updated record', 'Updated');
+
   }
   previous() {
     this.paginationCounter--;
@@ -184,7 +184,7 @@ export class IFSDataComponent implements OnInit {
       ), err => {
         this.toastr.error(err, 'Error !');
       }
-      
+
     } else {
       this.toastr.error('Some error occured while adding new data', 'Error !');
     }
