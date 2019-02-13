@@ -171,14 +171,22 @@ export class IFSDataComponent implements OnInit {
         lastSaved: 'Kathrine Langford'
       };
       // this.ifsRecords.push(param);
-      this.originalIfsData.push(param);
-      this.ifsRecords = this.originalIfsData;
-      this.ifsService.add(param);
-      form.reset();
-      form.resetForm();
-      this.toastr.success('New record has been added successfully.', 'Added !');
+      // this.originalIfsData.push(param);
+      // this.ifsRecords = this.originalIfsData;
+      this.ifsService.addData(param).subscribe(
+        _data => {
+          this.ifsRecords = _data;
+          this.originalIfsData = JSON.parse(JSON.stringify(_data));
+          form.reset();
+          form.resetForm();
+          this.toastr.success('New record has been added successfully.', 'Added !');
+        }
+      ), err => {
+        this.toastr.error(err, 'Error !');
+      }
+      
     } else {
-      return;
+      this.toastr.error('Some error occured while adding new data', 'Error !');
     }
   }
 

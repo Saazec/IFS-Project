@@ -4,12 +4,13 @@ import { IFS } from './ifs-data/IFS'
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
+import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
 export class IfsServiceService {
-  private url = 'api/dummy/ifs-data.json';
-  constructor(private http: HttpClient, private apiService: ApiService) { }
+  // private url = 'api/dummy/ifs-data.json';
+  constructor(private apiService: ApiService, private toastr: ToastrService) { }
 
   getAll(): Observable<IFS[]> {
     return this.apiService.getData('ifs')
@@ -19,19 +20,24 @@ export class IfsServiceService {
       );
   }
 
-  add(data: IFS): void {
-    console.log(data);
-    // Post request will come here
+  addData(data: IFS): Observable<IFS[]> {
+    return this.apiService.postData('ifs', data)
+      .pipe(
+        tap(_data => JSON.stringify(_data)),
+        catchError(this.errorHandler)
+      )
   }
+
 
   private errorHandler(err: HttpErrorResponse) {
     let errorMessage = '';
     if(err.error instanceof ErrorEvent) {
       errorMessage = `An Error Occured ${err.error.message}`;
     } else {
-      errorMessage = `Server returned code ${err.status}, error message is: ${err.message}`;
+      // errorMessage = `Server returned code ${err.status}, error message is: ${err.message}`;
+      errorMessage = err.error;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(errorMessage);
   }
 }
