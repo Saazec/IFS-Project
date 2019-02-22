@@ -22,10 +22,11 @@ export class AuthServiceService {
   get loggedIn() {
     return this.status.getValue();
   }
+
   setUserData(userData) {
-     this.apiService.postData('token', userData).subscribe(tokenData => {
-      console.log(tokenData);
-      localStorage.setItem('userData', JSON.stringify(tokenData));
+    this.apiService.postData('login', { name: userData.userName, password: userData.password }).subscribe(token => {
+      console.log(token);
+      localStorage.setItem('userData', JSON.stringify(token));
       this.loggedInStatus = true;
       this.loggedIn = true;
       this.router.navigate(['/dashboard']);
@@ -33,6 +34,7 @@ export class AuthServiceService {
     // localStorage.setItem('userData', JSON.stringify(userData));
 
   }
+
   getUserData() {
     let userData = localStorage.getItem('userData');
     if (userData) {
@@ -51,19 +53,12 @@ export class AuthServiceService {
 
   destroyUserData() {
     if (localStorage.getItem('userData')) {
-      
-      this.apiService.deleteData('token').subscribe(
-        _data => {
-          this.loggedInStatus = false;
-          localStorage.removeItem('userData');
-          this.loggedIn = false;
-        },
-        err => {
-          console.log(`Error ${JSON.parse(err)}`);
-        }
-      ) 
+      this.loggedInStatus = false;
+      localStorage.removeItem('userData');
+      this.loggedIn = false;
     }
   }
+
   checkIfLoggedIn(): boolean {
     if (localStorage.getItem('userData')) {
       return true;
@@ -71,4 +66,5 @@ export class AuthServiceService {
       return false
     }
   }
+
 }

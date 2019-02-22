@@ -20,7 +20,7 @@ export class IfsServiceService {
       );
   }
 
-  addData(data: IFS): Observable<IFS[]> {
+  addData(data: IFS): Observable<IFS> {
     return this.apiService.postData('ifs', data)
       .pipe(
         tap(_data => JSON.stringify(_data)),
@@ -28,7 +28,7 @@ export class IfsServiceService {
       )
   }
 
-  updateData(data: IFS): Observable<IFS[]> {
+  updateData(data: IFS): Observable<IFS> {
     return this.apiService.putData('ifs', data)
       .pipe(
         tap(_data => JSON.stringify(_data)),

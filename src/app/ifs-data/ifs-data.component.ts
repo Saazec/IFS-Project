@@ -68,35 +68,37 @@ export class IFSDataComponent implements OnInit {
       /**
        * uncomment the below code to enable gloabl search
        */
-      // this.originalIfsData.forEach(record => {
-      //   for (let key in record) {
-      //     if (String(record.caseNumber).includes(filterBy)) {
-      //       filteredArray.push(record);
-      //       return;
-      //     } else if (record.createdOn.toLowerCase().includes(filterBy)) {
-      //       filteredArray.push(record);
-      //       return;
-      //     } else if (record.division.toLowerCase().includes(filterBy)) {
-      //       filteredArray.push(record);
-      //       return;
-      //     } else if (record.engineScore.toLowerCase().includes(filterBy)) {
-      //       filteredArray.push(record);
-      //       return;
-      //     } else if (record.feedbackType.toLowerCase().includes(filterBy)) {
-      //       filteredArray.push(record);
-      //       return;
-      //     } else if (record.lastSaved.toLowerCase().includes(filterBy)) {
-      //       filteredArray.push(record);
-      //       return;
-      //     } else if (record.reportedDate.toLowerCase().includes(filterBy)) {
-      //       filteredArray.push(record);
-      //       return;
-      //     } else if (record.source.toLowerCase().includes(filterBy)) {
-      //       filteredArray.push(record);
-      //       return;
-      //     }
-      //   }
-      // })
+
+      /**
+     this.originalIfsData.forEach(record => {
+       for (let key in record) {
+         if (String(record.caseNumber).includes(filterBy)) {
+           filteredArray.push(record);
+           return;
+         } else if (record.createdOn.toLowerCase().includes(filterBy)) {
+           filteredArray.push(record);
+           return;
+         } else if (record.division.toLowerCase().includes(filterBy)) {
+           filteredArray.push(record);
+           return;
+         } else if (record.engineScore.toLowerCase().includes(filterBy)) {
+           filteredArray.push(record);
+           return;
+         } else if (record.feedbackType.toLowerCase().includes(filterBy)) {
+           filteredArray.push(record);
+           return;
+         } else if (record.lastSaved.toLowerCase().includes(filterBy)) {
+           filteredArray.push(record);
+           return;
+         } else if (record.reportedDate.toLowerCase().includes(filterBy)) {
+           filteredArray.push(record);
+           return;
+         } else if (record.source.toLowerCase().includes(filterBy)) {
+           filteredArray.push(record);
+           return;
+         }
+       }
+     })  */
       this.ifsRecords = _matching;
       if (!this.ifsRecords.length) {
         this.toastr.error('No Data Found', 'Error');
@@ -119,14 +121,11 @@ export class IFSDataComponent implements OnInit {
       this.ifsRecords = this.originalIfsData;
       this.maxLength = false;
       this.paginationCounter = 0;
-      // this.paginate();
     }
   }
 
   enableEditing(event, item, index) {
     this.currentIndex = index;
-    console.log(index);
-    this.toastr.warning('Editing has been enabled');
   }
 
   saveRecord(event, data) {
@@ -134,9 +133,8 @@ export class IFSDataComponent implements OnInit {
     if (data) {
       this.ifsService.updateData(data).subscribe(
         _data => {
-          this.ifsRecords = _data;
-          this.originalIfsData = JSON.parse(JSON.stringify(_data));
-          // this.ifsRecords = this.originalIfsData;
+          let _index = _.findIndex(this.ifsRecords, { caseNumber: _data.caseNumber });
+          this.ifsRecords[_index] = _data;
           this.toastr.success('Successfully updated record', 'Updated');
         },
         err => {
@@ -144,7 +142,6 @@ export class IFSDataComponent implements OnInit {
         }
       )
     }
-
   }
   previous() {
     this.paginationCounter--;
@@ -175,8 +172,8 @@ export class IFSDataComponent implements OnInit {
       // this.ifsRecords = this.originalIfsData;
       this.ifsService.addData(param).subscribe(
         _data => {
-          this.ifsRecords = _data;
-          this.originalIfsData = JSON.parse(JSON.stringify(_data));
+          this.ifsRecords.push(_data);
+          // this.originalIfsData = JSON.parse(JSON.stringify(_data));
           form.reset();
           form.resetForm();
           this.toastr.success('New record has been added successfully.', 'Added !');
