@@ -6,5 +6,5 @@
 - Run the application using `npm start`.
 
 #### Use the following credentials to log in
-- _Username:jhon_ (all lowercase)
+- _Username:  jhon_ (all lowercase)
 - _Password: whik_ (all lowercase)
