@@ -1,8 +1,10 @@
+## Follow the below steps
 
-clone the project.
-Using the terminal navigate to the IFS-Project folder.
-Install the dependencies using npm install.
-Run the application using "npm start".
+- clone the project.
+- Using the `terminal` navigate to the `IFS-Project folder`.
+- Install the dependencies using `npm install`.
+- Run the application using `npm start`.
 
-Username:jhon (all lowercase)
-Password: whik (all lowercase)
+#### Use the following credentials to log in
+- _Username:jhon_ (all lowercase)
+- _Password: whik_ (all lowercase)
